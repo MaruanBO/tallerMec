@@ -16,8 +16,145 @@
   </head>
   <body>
     <?php
-      require '../header.php';
-      require 'menuRepar.php';
+      require_once '../header.php';
+      require_once 'menuRepar.php';
+      require_once '../conn.php';
+
+      class GetEmployes extends Conn {
+
+        public function __construct() {
+            parent::__construct();
+        }
+        
+        public function cargaEmpleados() {
+          $datos = $this->connection->prepare('SELECT * FROM empleados WHERE estado=0');
+          $datos->execute();
+          echo '<div class="text-center">
+                  <select class="form-control" name="Empleado">';
+          while($linea = $datos->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="'.$linea['dni'].'">'.$linea['nombre'].'</option>';      
+          }
+          echo '</select>
+            </div>';
+        }
+
+      }
+
+      class GetRepairs extends Conn {
+
+        public function __construct() {
+            parent::__construct();
+        }
+        public function cargaReparaciones() {
+          $datos = $this->connection->prepare('SELECT * FROM catalogo');
+          $datos->execute();
+          while($linea = $datos->fetch(PDO::FETCH_ASSOC)) {
+           echo '<div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" name="'.$linea['id'].'" class="form-check-input" value="'.$linea['precio'].'">'.$linea['nombre'].'
+                  </label>
+                 </div>';
+          }
+        }
+      }
+
+      class RepairInsert extends Conn {
+
+        protected $multiplicador = 1;
+
+        public function __construct() {
+            parent::__construct();
+        }
+
+        public function cargaDinero($dni,$plate,$aceite,$motor,$ruedas,$ventana) {
+
+          
+
+          $result = $this->connection->prepare('SELECT * FROM vehiculos WHERE matricula=' .(int) $plate);
+          $result->execute();
+          $result2 = $this->connection->prepare('SELECT * FROM catalogo');
+          $result2->execute();
+          $row = $result->fetch(PDO::FETCH_BOTH);
+          $row2 = $result2->fetch(PDO::FETCH_BOTH);
+            
+          if ($row["gama"] == 'baja') {
+            $this->multiplicador = 1;
+          } elseif ($row["gama"] == 'media') {
+            $this->multiplicador = 2;
+          } elseif ($row["gama"] == 'alta') {
+            $this->multiplicador = 4;}
+
+          $suma = $aceite + $motor + $ruedas + $ventana;
+
+          $coste = $this->multiplicador * $suma;
+
+          $fechaEntrada =  date("Y/m/d");
+
+          $fechaSalida = date('Y/m/d', strtotime('+ 2 days'));
+
+          $informe= array($aceite, $motor, $ruedas, $ventana);
+
+          $informebueno = json_encode($informe);
+
+          $this->load($dni,$plate,$fechaEntrada,$fechaSalida,$coste,$informebueno);
+
+        }
+
+        public function load($dni,$matricula,$fechaEntrada,$fechaSalida,$coste,$informe) {
+            
+            $result = $this->connection->prepare('INSERT INTO reparar (dni,matricula,fechaEntrada,fechaSalida,coste,informe) values(?,?,?,?,?,?)');
+            $result->bindParam('1', $dni);
+            $result->bindParam('2', $matricula);
+            $result->bindParam('3', $fechaEntrada);
+            $result->bindParam('4', $fechaSalida);
+            $result->bindParam('5', $coste);
+            $result->bindParam('6', $informe);
+
+            $this->updateemploy($dni);
+            
+            if($result->execute()){
+              return '<div class="alert alert-danger mt-2" role="alert">Reparacion añadida correctamente</div>';
+          }
+            
+        }
+
+        public function updateemploy($dni) {
+          $result2 = $this->connection->prepare('UPDATE empleados SET estado=1 WHERE dni=?');
+          $result2->bindParam('1', $dni);
+          if($result2->execute()){
+            $buscar = $this->connection->prepare('SELECT dni, nombre FROM empleados WHERE dni=?');
+            $buscar->bindParam('1', $dni);
+            $linea = $buscar->fetch();
+            return '<div class="alert alert-success mt-2" role="alert">
+                ¡'.$linea["nombre"].' ha recibido el encargo!
+              </div>';
+          }
+        }
+    }
+
+      if (isset($_POST['registrar'])) {
+        
+        $reparacion = new RepairInsert();
+        
+        //Aceite
+        if (empty($_POST['0'])) {
+          $_POST['0'] = 0;
+        }
+        //Motor
+        if (empty($_POST['1'])) {
+          $_POST['1'] = 0;
+        }
+        //Rueda
+        if (empty($_POST['2'])) {
+          $_POST['2'] = 0;
+        }
+        //Ventana
+        if (empty($_POST['3'])) {
+          $_POST['3'] = 0;
+        }
+        echo $reparacion->cargaDinero($_POST['Empleado'],$_POST['matricula'],$_POST['0'],$_POST['1'],$_POST['2'],$_POST['3']);
+      }
+
     ?>
     
     <div class="container border border-info mt-2 mb-2 bg-white">
@@ -29,16 +166,22 @@
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="">
                     <div class="form-group mb-2">
                         <h1 class="text-center">Formulario</h1>
-                        <label for="dni">DNI*</label>
-                        <input type='text' class="form-control" name='dni' id="dni" minlength="9" maxlength="9" required>
+                        <label for="dni">Empleado Encargado*</label>
+                        <?php
+                          $empleados = new GetEmployes();
+                          $empleados->cargaEmpleados();
+                        ?>
                     </div>
                     <div class="form-group mb-2">
                         <label for="matricula">Matricula*</label>
                         <input type='text' class="form-control" name='matricula' id="matricula" minlength="7" maxlength="8" required>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="fechaEntrada">Fecha Entrada*</label>
-                        <input type='date' class="form-control" name='fechaEntrada' id="fechaEntrada" required>
+                        <label for="matricula">Partes Reparadas*</label>
+                      <?php
+                        $repairs = new GetRepairs();
+                        $repairs->cargaReparaciones();
+                      ?>
                     </div>
                     <p> <input type="submit" class="btn btn-primary w-100" name='registrar' value="Registrar"></p>
                 </form>
@@ -47,7 +190,7 @@
     </div>
 
     <?php
-      require '../footer.php';
+      require_once '../footer.php';
     ?>
 
     <!-- Optional JavaScript -->

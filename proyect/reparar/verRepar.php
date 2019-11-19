@@ -16,33 +16,59 @@
   </head>
   <body>
     <?php
-      require '../header.php';
-      require 'menuRepar.php';
+      require_once '../header.php';
+      require_once 'menuRepar.php';
+      require_once '../conn.php';
+
+      class GetFacturas extends Conn {
+        
+        public function __construct() {
+            parent::__construct();
+        }
+        public function cargaFacturas($dni) {
+          $datos = $this->connection->prepare('SELECT id,reparar.dni as dni,reparar.matricula as matricula,fechaEntrada,fechaSalida,coste,informe,vehiculos.dni_c as dni_c, vehiculos.marca as marca, vehiculos.modelo as modelo, empleados.nombre as nombre FROM reparar JOIN vehiculos ON reparar.matricula = vehiculos.matricula JOIN empleados ON reparar.dni = empleados.dni');
+          $datos->execute();
+          echo '<table class="table table-hover">
+           <tr>
+            <th>Nombre Empleado</th>
+            <th>Dni Cliente</th>
+            <th>Matricula</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Fecha Reparacion</th>
+            <th>Coste</th>
+            <th>Acciones</th>
+           </tr>
+           ';
+          while($linea = $datos->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>".$linea["nombre"]."</td>";
+            echo "<td>".$linea["dni_c"]."</td>";
+            echo "<td>".$linea["matricula"]."</td>";
+            echo "<td>".$linea["marca"]."</td>";
+            echo "<td>".$linea["modelo"]."</td>";
+            echo "<td>".$linea["fechaEntrada"]."</td>";
+            echo "<td>".$linea["coste"]."€</td>";
+            echo "<td><form method='post' class='mr-5' action='../reparar/verReparExt.php'><button type='submit' class='btn btn-primary w-50 pr-3' name='verFacturaExt' value='".$linea["id"]."'>Factura Extendida</button></form></td>";
+            echo '</tr>';
+          }
+          echo '</table>';
+        }
+      }
     ?>
-    
-    
-    <div class="container border border-info mt-2 mb-2 bg-white">
-        <div class="row pb-3">
-            <div class="col-12"></div>
-        </div>
-        <div class="container row border-bottom border-info pb-3 pt-3">
-            <div class="col-12 col-md-6 offset-md-3 border border-success rounded bg-light">
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="">
-                    <div class="form-group mb-2">
-                        <h1 class="text-center">Formulario</h1>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="matricula">Matricula*</label>
-                        <input type='text' class="form-control" name='matricula' id="matricula" minlength="7" maxlength="8" required>
-                    </div>
-                    <p> <input type="submit" class="btn btn-primary w-100" name='ver' value="Mostrar Datos"></p>
-                </form>
-            </div>
-        </div>
-    </div>
+  
+    <?php
+
+      if (isset($_POST['verFactura'])) {
+        $dni = $_POST['verFactura'];
+        $facturas = new GetFacturas();
+        $facturas->cargaFacturas($dni);
+      } 
+
+    ?>
 
     <?php
-      require '../footer.php';
+      require_once '../footer.php';
     ?>
 
     <!-- Optional JavaScript -->

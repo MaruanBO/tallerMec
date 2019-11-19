@@ -16,12 +16,12 @@
   </head>
   <body>
     <?php
-      require '../header.php';
-      require 'menuRepar.php';
+      require_once '../header.php';
+      require_once 'menuRepar.php';
     ?>
 
     <?php
-      require '../footer.php';
+      require_once '../footer.php';
     ?>
 
     <!-- Optional JavaScript -->
