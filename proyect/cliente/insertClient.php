@@ -29,19 +29,22 @@
             }
 
 
-            public function insertClient($dni,$nombre,$telefono) {
+            public function insertClient($dni,$nombre,$telefono,$user,$pass) {
                 
                 $name = $this->connection->prepare('SELECT * FROM clientes where nombre =?');
                 $nif = $this->connection->prepare('SELECT * FROM clientes where dni=?');
                 $tel = $this->connection->prepare('SELECT * FROM clientes where telefono=?');
-                
+                $usuario = $this->connection->prepare('SELECT * FROM usuarios where user=?');
+
                 $name->bindParam('1', $nombre);
                 $nif->bindParam('1', $dni);
                 $tel->bindParam('1', $telefono);
+                $usuario->bindParam('1', $user);
                 
                 $name->execute();
                 $nif->execute();
                 $tel->execute();
+                $usuario->execute();
 
 
                 if($nif->fetch() > 1){
@@ -58,13 +61,28 @@
                     </div>';
                 }
 
+               if($usuario->fetch() > 1){
+                    $fail[] = '
+                    <div class="alert alert-danger mt-2" role="alert">
+                        Usuario en uso!
+                    </div>';
+                }
+
                 if (empty($fail)){
+
+                $hash = password_hash($pass, PASSWORD_DEFAULT); 
+                $tipo = "Cliente";
+                $register = $this->connection->prepare('INSERT INTO usuarios (user,password,tipo) values(?,?,?)');
+                $register->bindParam('1', $user);
+                $register->bindParam('2', $hash);
+                $register->bindParam('3', $tipo);
+                $register->execute();
 
                 $result = $this->connection->prepare('INSERT INTO clientes (dni,nombre,telefono) values(?,?,?)');
                 $result->bindParam('1', $dni);
                 $result->bindParam('2', $nombre);
                 $result->bindParam('3', $telefono);
-                
+
                     if($result->execute()){
                         return '<div class="alert alert-success mt-2" role="alert">
                                 ¡Cliente registrado correctamente!
@@ -83,7 +101,7 @@
 
         if(isset($_POST['submit'])){
         $user = new addClient();
-        echo $user->insertClient($_POST['dni'],$_POST['nombre'],$_POST['telefono']);
+        echo $user->insertClient($_POST['dni'],$_POST['nombre'],$_POST['telefono'],$_POST['user'],$_POST['pass']);
         }
 
     ?>
@@ -107,6 +125,14 @@
                     <div class="form-group mb-2">
                         <label for="telefono">Teléfono*</label>
                         <input type='text' class="form-control" placeholder="Telefono" name='telefono' title="e.g 666666666" pattern="[0-9]{9}" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="user">Usuario*</label>
+                        <input type='text' class="form-control" placeholder="Usuario" name='user' id="user" title="e.g Pepe123" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="pass">Contraseña*</label>
+                        <input type='password' class="form-control" placeholder="Contraseña" name='pass' id="pass" title="e.g Pepe123/" required>
                     </div>
                     <p> <input type="submit" class="btn btn-primary w-100" name='submit' value="Registrar"></p>
                 </form>
