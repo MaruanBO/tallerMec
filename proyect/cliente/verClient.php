@@ -38,32 +38,59 @@
                 parent::__construct();
             }
 
-            public function showClientes() {
+
+           public function searchClient($nombre) {
+
+                $name = $this->connection->prepare('SELECT * FROM clientes where nombre =?');
                 
-            $result = $this->connection->prepare('SELECT nombre FROM clientes');   
-            
-            $result->execute();
-            
-                echo '<div class="container border border-info mt-2 mb-2 bg-light">';
-                echo '<form method="post" action="tableClient.php">';
-                echo '<div class="form-group mb-2 pt-2">';
-                echo '<label for="select">Selecciona el nombre del cliente:</label><br>';
-                echo '<select name="cliente" id="select" class="form-control">';
-                echo '<option selected>No has seleccionado nada</option>';
-                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo '<option>'.$row['nombre'].'</option>';
+                $name->bindParam('1', $nombre);
+
+
+                $name->execute();
+
+
+                if($name->fetch() == 0){
+                    $fail[] = '
+                    <div class="alert alert-danger mt-2" role="alert">
+                        El nombre introducido no existe en la base de datos!
+                    </div>';
                 }
-                echo '</select></div><br>';
-                echo '<input type="submit" name="submit" class="btn btn-primary mt-3" value="Buscar"><br><br>';
-                echo '</div>';
-                echo '</form>';
-                echo '</div>'; 
-                
+
+                    if(isset($fail)){
+                        foreach ($fail as $exec){
+                          echo "$exec";
+                        }
+                    }
+
+                if (empty($fail)){
+
+                    $result = $this->connection->prepare('SELECT * FROM clientes where nombre=?');  
+                    $result->bindParam('1',$nombre); 
+                    $result->execute();
+                   echo '<table class="table table-hover">
+                   <tr>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                   </tr>';
+                    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>";
+                        echo "<td>".$row["nombre"]."</td>";
+                        echo "<td>".$row["dni"]."</td>";
+                        echo "<td>".$row["telefono"]."</td>";
+                        echo "<td><form method='post' class='mr-5' action='verRepar.php'><button type='submit' class='btn btn-primary w-50 pr-3' name='verFactura' value='".$row["dni"]."'>Facturas</button></form></td>";
+                    }
+                    echo '</tr>';
+                    echo '</table>';  
+                } 
             }
         }
-
+        
+        if($_POST){
         $user = new clientesShow();
-        $user->showClientes();
+        $user->searchClient($_POST['nombre']);
+        }
 
     ?>
     
