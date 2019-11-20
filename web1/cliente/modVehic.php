@@ -97,7 +97,7 @@
 
             return modVehic::verModificar().'
                   <div class="alert alert-success mt-2" role="alert">
-                    ¡Empleado actualizado correctamente!
+                    ¡Vehiculo actualizado correctamente!
                   </div>'; 
           }
         		
