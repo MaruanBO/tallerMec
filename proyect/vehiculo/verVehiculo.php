@@ -25,15 +25,69 @@
     <title>Vehiculo | Mostrar datos</title>
   </head>
   <body>
+
+    <div class="container border border-info mt-2 mb-2 bg-white">
+        <div class="row pb-3">
+            <div class="col-12"></div>
+        </div>
+        <div class="container row border-bottom border-info pb-3 pt-3">
+            <div class="col-12 col-md-6 offset-md-3 border border-success rounded bg-light">
+                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="">
+                    <div class="form-group mb-2">
+                        <h2 class="text-center">Añadir vehiculo</h2>
+                        <label for="dni">DNI*</label>
+                        <input type='text' class="form-control" name='dni_c' id="dni_c" title="e.g 11111111N" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="nombre">Matricula*</label> 
+                        <input type='text' name='matricula' id="matricula" class="form-control" title="e.g 000FPZ" pattern="[0-9]{4}[A-Z]{3,4}" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="nombre">Marca*</label> 
+                        <input type='text' name='marca' id="marca" class="form-control" title="e.g Pepe Gonzales Morales" pattern="[A-Za-z]{1,10}" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="nombre">Modelo*</label> 
+                        <input type='text' name='modelo' id="modelo" class="form-control" title="e.g Pepe Gonzales Morales" pattern="[A-Za-z]{1,10}" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="nombre">Tipo*</label> 
+                        <input type='text' name='tipo' id="tipo" class="form-control" title="e.g Pepe Gonzales Morales" pattern="[A-Za-z]{1,10}" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="nombre">Gama*</label> 
+                        <select name='gama' id="gama" class="form-control" required>
+                            <option>Baja</option>
+                            <option selected>Media</option>
+                            <option>Alta</option>
+                        </select>
+                    </div>
+                    <p> <input type="submit" class="btn btn-primary w-100" name='registrar' value="Registrar"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <?php
-      require '../header.php';
-      require 'menuVehiculo.php';
+      //require '../header.php';
+      //require 'menuVehiculo.php';
       require_once 'conn.php';
-      require_once 'vehiculos.php';   
+      require_once 'vehiculos.php';  
+      $dni = $_POST['dni'];
         
 
         $user = new vehiculos();
-        $user->load($_POST['dni']);
+        $user->loadAll();
+
+        if (isset($_POST['registrar'])) {
+          $dni_c = $_POST['dni_c'];
+          $matricula = $_POST['matricula'];
+          $marca = $_POST['marca'];
+          $modelo = $_POST['modelo'];
+          $tipo = $_POST['tipo'];
+          $gama = $_POST['gama'];
+          $user->registrar($dni_c,$matricula,$marca,$modelo,$tipo,$gama);
+        } 
 
         if (isset($_POST['borrador'])) {
           $user->borrar($_POST['borrador']);
