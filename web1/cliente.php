@@ -1,3 +1,6 @@
+<?php 
+  session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -15,37 +18,16 @@
     <title>Panel | Cliente</title>
   </head>
   <body>
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="http://localhost/web1/cliente.php">Cliente</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav mr-auto text-center">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarCatalogo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Catalogo
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarCatalogo">
-                <a class="dropdown-item" href="#">Mi coche</a>
-                <a class="dropdown-item" href="#">Mis datos</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="http://localhost/web1/logout.php">Cerrar Sesión</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <?php
+      //session_start();
+      require_once 'menuCliente.php';
+    ?>
     <body>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="alert alert-primary m-2" role="alert">
-              Bienvenido, <?php //Nombre usuario ?>!
+              Bienvenido, <?php echo $_SESSION['cliente'] ?>!
             </div>
           </div>
         </div>

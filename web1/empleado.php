@@ -17,7 +17,7 @@
   <body>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="http://localhost/web1/admin.php">Empleado</a>
+        <a class="navbar-brand" href="http://localhost/web1/empleado.php">Empleado</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -29,8 +29,8 @@
                 Cliente
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarCliente">
-                <a class="dropdown-item" href="#">Agregar</a>
-                <a class="dropdown-item" href="#">Ver</a>
+                <a class="dropdown-item" href="http://localhost/web1/cliente/insertClient.php">Agregar</a>
+                <a class="dropdown-item" href="http://localhost/web1/cliente/verClient.php">Ver</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -38,8 +38,8 @@
                 Vehiculo
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarVehiculo">
-                <a class="dropdown-item" href="#">Agregar</a>
-                <a class="dropdown-item" href="#">Ver</a>
+                <a class="dropdown-item" href="http://localhost/web1/vehiculo/insertVehic.php">Agregar</a>
+                <a class="dropdown-item" href="http://localhost/web1/vehiculo/verVehic.php">Ver</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -57,6 +57,12 @@
             <li class="nav-item">
               <a class="nav-link" href="http://localhost/web1/logout.php">Cerrar Sesión</a>
             </li>
+            <form method='post' action='cliente/verClient.php'>
+              <div class='input-group-append'>
+                <input name='nombre' class='form-control' placeholder="Buscar cliente" required  title='e.g Pepe Gonzales Morales' pattern='[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{2,25}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{2,25}' type='text' aria-label='Search'>
+                <button class='btn btn-secondary' type='submit'>Buscar</button>
+              </div>
+            </form>
           </ul>
         </div>
       </nav>

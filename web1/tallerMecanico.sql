@@ -51,6 +51,13 @@ CREATE TABLE catalogo (
 	precio SMALLINT(4) UNSIGNED NOT NULL,
 	CONSTRAINT PRIMARY KEY(id)
 );
+
+CREATE TABLE usuarios (
+	user VARCHAR(50) NOT NULL,
+	password VARCHAR(500) NOT NULL,
+	tipo VARCHAR(50) NOT NULL
+);
+
 INSERT INTO empleados (dni,nombre,telefono) values('11111111N','Manolo','876392042');
 INSERT INTO clientes (dni,nombre,telefono) values('22222222N','Pepe','687645321');
 INSERT INTO vehiculos (dni_c,matricula,marca,modelo,tipo,gama) values('22222222N','8764GFX','SEAT','IBIZA','coche','media');

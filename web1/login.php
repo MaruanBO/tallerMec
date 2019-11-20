@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -47,23 +50,23 @@
               }
 
               public function load($user,$password) {
-                $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-                $login = $this->connection->prepare('SELECT * FROM usuarios WHERE user = ? AND password = ?');
+                $login = $this->connection->prepare('SELECT * FROM usuarios WHERE user = ?');
                 $login->bindParam('1',$user);
-                $login->bindParam('2',$hash);
                 $login->execute();
-                $linea = $login->fetch();
+                $check_pass = $login->fetch();
 
-                if($login->fetch()==0) {
-                  switch ($linea['tipo']) {
+                if(password_verify($password,$check_pass['password'])) {
+                  switch ($check_pass['tipo']) {
                     case 'Cliente':
+                      $_SESSION['cliente'] = $user;
                       header("Location:cliente.php");
                       break;
                     case 'Empleado':
+                      $_SESSION['empleado'] = $user;
                       header("Location:empleado.php");
                       break;
                     case 'Admin':
+                      $_SESSION['admin'] = $user;
                       header("Location:admin.php");
                       break;
                     default:

@@ -12,12 +12,12 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="">
     
-    <title>Admin | Taller </title>
+    <title>Panel | Admin </title>
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="http://localhost/web1/admin.php">Admin Área</a>
+        <a class="navbar-brand" href="http://localhost/web1/admin/admin.php">Admin Área</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
