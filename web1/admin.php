@@ -26,7 +26,7 @@
         <div class="row">
           <div class="col-12">
             <div class="alert alert-primary m-2" role="alert">
-              Bienvenido, <?php echo $_SESSION['cliente'] ?>!
+              Bienvenido, <?php echo $_SESSION['admin'] ?>!
             </div>
           </div>
         </div>
