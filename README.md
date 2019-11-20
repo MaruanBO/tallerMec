@@ -1,2 +1,2 @@
 # tallerMec
-hijos de puta
+Unicamente sabes que sufres cuando estas sufriendo.
