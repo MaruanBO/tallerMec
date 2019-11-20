@@ -30,6 +30,7 @@
                 $result = $this->connection->prepare('SELECT nombre, dni FROM empleados order by nombre, dni');
                 $result->execute();
 
+<<<<<<< HEAD:proyectnew/empleado/selectEmp.php
                 echo '<div class="container border border-info mt-2 mb-2 bg-light">';
                 echo '<form method="post" action="verEmp.php">';
                 echo '<div class="form-group mb-2 pt-2">';
@@ -63,6 +64,62 @@
 
         $emp1 = new selectEmp();
         $emp1->load();
+=======
+
+           public function searchClient($dni) {
+
+                $name = $this->connection->prepare('SELECT * FROM clientes where dni =?');
+                
+                $name->bindParam('1', $nombre);
+
+
+                $name->execute();
+
+
+                if($name->fetch() == 0){
+                    $fail[] = '
+                    <div class="alert alert-danger mt-2" role="alert">
+                        El nombre introducido no existe en la base de datos!
+                    </div>';
+                }
+
+                    if(isset($fail)){
+                        foreach ($fail as $exec){
+                          echo "$exec";
+                        }
+                    }
+
+                if (empty($fail)){
+
+                    $result = $this->connection->prepare('SELECT * FROM clientes where nombre=?');  
+                    $result->bindParam('1',$nombre); 
+                    $result->execute();
+                   echo '<table class="table table-hover">
+                   <tr>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                   </tr>';
+                    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>";
+                        echo "<td>".$row["nombre"]."</td>";
+                        echo "<td>".$row["dni"]."</td>";
+                        echo "<td>".$row["telefono"]."</td>";
+                        echo "<td><form method='post' class='mr-5' action='verRepar.php'><button type='submit' class='btn btn-primary w-50 pr-3' name='verFactura' value='".$row["dni"]."'>Facturas</button></form></td>";
+                    }
+                    echo '</tr>';
+                    echo '</table>';  
+                } 
+            }
+        }
+        
+        if($_POST){
+        $user = new clientesShow();
+        $user->searchClient($_POST['dni']);
+        }
+
+>>>>>>> 46bca7e0f5f507e70f67f5d764a310478b55bd2f:proyect/cliente/verClient.php
     ?>
 
     <?php
