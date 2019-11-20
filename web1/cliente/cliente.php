@@ -1,3 +1,6 @@
+<?php 
+  session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -12,30 +15,43 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="">
     
-    <title>Cliente</title>
+    <title>Panel | Cliente</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand navbar-light bg-light">
-      <div class="collapse navbar-collapse" id="menu2">
-        <ul class="navbar-nav mr-auto text-center">
-          <li class="nav-item">
-            <a class="nav-link" href="../cliente/insertClient.php">Insertar</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="../cliente/ShowClientUp.php">Actualizar</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../cliente/verClient.php">Ver</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../cliente/delClient.php">Borrar cliente</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
     <?php
-      require '../footer.php';
+      require_once 'menuCliente.php';
+      require_once '../Conn.php';
+
+      class Cliente extends Conn {
+
+        public function __construct() {
+          parent::__construct();
+        }
+
+        public function getNombre(){
+          $result = $this->connection->prepare('SELECT * FROM clientes WHERE dni = ?');
+          $result->bindParam('1', $_SESSION['cliente']);
+          $result->execute();
+          $row = $result->fetch(PDO::FETCH_ASSOC);
+          return $row["nombre"];
+        }
+      }
+
+      $cliente = new Cliente();
+    ?>
+    <body>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="alert alert-primary m-2" role="alert">
+              Bienvenido, <?php echo $cliente->getNombre() ?>!
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+    <?php
+      require_once '../footer.php';
     ?>
 
     <!-- Optional JavaScript -->

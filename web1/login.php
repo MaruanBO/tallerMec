@@ -59,15 +59,15 @@
                   switch ($check_pass['tipo']) {
                     case 'Cliente':
                       $_SESSION['cliente'] = $user;
-                      header("Location:cliente.php");
+                      header("Location:cliente/cliente.php");
                       break;
                     case 'Empleado':
                       $_SESSION['empleado'] = $user;
-                      header("Location:empleado.php");
+                      header("Location:empleado/empleado.php");
                       break;
                     case 'Admin':
                       $_SESSION['admin'] = $user;
-                      header("Location:admin.php");
+                      header("Location:admin/admin.php");
                       break;
                     default:
                       header("Location:index.php");

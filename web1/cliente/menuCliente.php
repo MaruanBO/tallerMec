@@ -1,24 +1,27 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="menu2">
-    <ul class="navbar-nav mr-auto text-center">
-      <li class="nav-item">
-        <a class="nav-link" href="../cliente/insertClient.php">Insertar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../cliente/ShowClientUp.php">Actualizar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../cliente/tableClient.php">Ver cliente</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../cliente/delClient.php">Borrar cliente</a>
-      </li>
-    </ul>
-  </div>
-      <form method='post' action='verClient.php'>
-        <div class='input-group-append'>
-          <input name='nombre' class='form-control' placeholder="Buscar cliente" required  title='e.g Pepe Gonzales Morales' pattern='[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{2,25}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{2,25}' type='text' aria-label='Search'>
-          <button class='btn btn-secondary' type='submit'>Buscar</button>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="http://localhost/web1/cliente/cliente.php">Cliente</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav mr-auto text-center">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarCatalogo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Catalogo
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarCatalogo">
+                <a class="dropdown-item" href="http://localhost/web1/cliente/verVehic.php">Mi coche</a>
+                <a class="dropdown-item" href="http://localhost/web1/cliente/tableClient.php">Mis datos</a>
+                <a class="dropdown-item" href="http://localhost/web1/cliente/modClient.php">Actualizar Perfil</a>
+                <a class="dropdown-item" href="http://localhost/web1/cliente/modVehic.php">Actualizar Coche</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost/web1/logout.php">Cerrar Sesión</a>
+            </li>
+          </ul>
         </div>
-      </form>  
-</nav>
+      </nav>
+    </header>

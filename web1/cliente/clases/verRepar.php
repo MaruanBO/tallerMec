@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -19,8 +16,8 @@
   </head>
   <body>
     <?php
-      require_once 'menuCliente.php';
-      require_once '../Conn.php';
+      require 'menuRepar.php';
+      require_once 'conn.php';
 
       class GetFacturas extends Conn {
         
