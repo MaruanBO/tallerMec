@@ -41,18 +41,17 @@
 
            public function searchClient($dni) {
 
-                $name = $this->connection->prepare('SELECT * FROM clientes where dni =?');
-                
-                $name->bindParam('1', $nombre);
+                $nif = $this->connection->prepare('SELECT * FROM clientes where dni=?');
+
+                $nif->bindParam('1', $dni);
+
+                $nif->execute();
 
 
-                $name->execute();
-
-
-                if($name->fetch() == 0){
+                if($nif->fetch() == 0){
                     $fail[] = '
                     <div class="alert alert-danger mt-2" role="alert">
-                        El nombre introducido no existe en la base de datos!
+                        Dni no existe fidel ten cuidadito!
                     </div>';
                 }
 
@@ -64,8 +63,8 @@
 
                 if (empty($fail)){
 
-                    $result = $this->connection->prepare('SELECT * FROM clientes where nombre=?');  
-                    $result->bindParam('1',$nombre); 
+                    $result = $this->connection->prepare('SELECT * FROM clientes where dni=?');  
+                    $result->bindParam('1',$dni); 
                     $result->execute();
                    echo '<table class="table table-hover">
                    <tr>

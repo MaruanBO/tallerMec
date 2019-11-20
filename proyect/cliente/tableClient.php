@@ -17,6 +17,7 @@
   <body>
     
     <?php
+      session_start();
       require '../header.php';
       require 'menuCliente.php';
       require_once 'conn.php';
@@ -29,12 +30,12 @@
                 parent::__construct();
             }
 
-           public function load($name) {
+           public function showClient() {
                 
-                $result = $this->connection->prepare('SELECT nombre , dni , telefono FROM clientes WHERE nombre = ?');   
-                $result->bindParam('1', $name);   
+                $result = $this->connection->prepare('SELECT * FROM clientes where dni=?');  
+                $result->bindParam('1',$_SESSION['cliente']); 
                 $result->execute();
-
+                
                echo '<table class="table table-hover">
                <tr>
                 <th>Nombre</th>
@@ -47,16 +48,14 @@
                     echo "<td>".$row["nombre"]."</td>";
                     echo "<td>".$row["dni"]."</td>";
                     echo "<td>".$row["telefono"]."</td>";
-                    echo "<td><form method='post' class='mr-5' action='../reparar/verRepar.php'><button type='submit' class='btn btn-primary w-50 pr-3' name='verFactura' value='".$row["dni"]."'>Facturas</button></form></td>";
+                    echo "<td><form method='post' class='mr-5' action='verRepar.php'><button type='submit' class='btn btn-primary w-50 pr-3' name='verFactura' value='".$row["dni"]."'>Facturas</button></form></td>";
                 }
                 echo '</tr>';
-                echo '</table>';                
+                echo '</table>';            
             }
         }
-        if($_POST){
         $user = new clientesData();
-        $user->load($_POST['cliente']);
-        }
+        $user->showClient();
 
     ?>
     
