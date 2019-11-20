@@ -29,7 +29,7 @@
             }
 
 
-            public function insertClient($dni,$nombre,$telefono,$user,$pass) {
+            public function insertClient($dni,$nombre,$telefono,$pass) {
                 
                 $name = $this->connection->prepare('SELECT * FROM clientes where nombre =?');
                 $nif = $this->connection->prepare('SELECT * FROM clientes where dni=?');
@@ -61,19 +61,14 @@
                     </div>';
                 }
 
-               if($usuario->fetch() > 1){
-                    $fail[] = '
-                    <div class="alert alert-danger mt-2" role="alert">
-                        Usuario en uso!
-                    </div>';
-                }
 
                 if (empty($fail)){
 
                 $hash = password_hash($pass, PASSWORD_DEFAULT); 
                 $tipo = "Cliente";
+
                 $register = $this->connection->prepare('INSERT INTO usuarios (user,password,tipo) values(?,?,?)');
-                $register->bindParam('1', $user);
+                $register->bindParam('1', $dni);
                 $register->bindParam('2', $hash);
                 $register->bindParam('3', $tipo);
                 $register->execute();
@@ -101,7 +96,7 @@
 
         if(isset($_POST['submit'])){
         $user = new addClient();
-        echo $user->insertClient($_POST['dni'],$_POST['nombre'],$_POST['telefono'],$_POST['user'],$_POST['pass']);
+        echo $user->insertClient($_POST['dni'],$_POST['nombre'],$_POST['telefono'],$_POST['pass']);
         }
 
     ?>
@@ -125,10 +120,6 @@
                     <div class="form-group mb-2">
                         <label for="telefono">Teléfono*</label>
                         <input type='text' class="form-control" placeholder="Telefono" name='telefono' title="e.g 666666666" pattern="[0-9]{9}" required>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="user">Usuario*</label>
-                        <input type='text' class="form-control" placeholder="Usuario" name='user' id="user" title="e.g Pepe123" required>
                     </div>
                     <div class="form-group mb-2">
                         <label for="pass">Contraseña*</label>
