@@ -54,7 +54,7 @@ class vehiculos extends Conn {
 
     public function load($dni) {
                 
-        $result = $this->connection->prepare('SELECT * FROM vehiculos where dni = ?');
+        $result = $this->connection->prepare('SELECT * FROM vehiculos where dni_c = ?');
         $result->bindParam('1', $dni);
         $result->execute();
 
@@ -109,6 +109,7 @@ class vehiculos extends Conn {
         $check =  $this->connection->prepare('SELECT dni from clientes;');
         $check->execute();
         if (in_array($dni_c, $check->fetch(PDO::FETCH_ASSOC))){
+
             $check =  $this->connection->prepare('SELECT dni from clientes;');
             $check->execute();
             if (in_array($dni_c, $result->fetch(PDO::FETCH_ASSOC))){
@@ -116,7 +117,7 @@ class vehiculos extends Conn {
 
             } else {
                 if($result->execute()){
-                    echo "<meta http-equiv='refresh' content='0'>";
+                    echo "El vehiculo se ha añadido correctamente";
                 }
 
                 return null;
@@ -133,7 +134,7 @@ class vehiculos extends Conn {
         $result->bindParam('1', $matricula);
 
         if($result->execute()){
-            echo "<meta http-equiv='refresh' content='0'>";
+            echo "El vehiculo se ha borrado correctamente";
         } else {
             echo '<p class="p-3 mb-2 bg-light text-dark">El vehiculo no se ha eliminado por alguna razon<p>';
 
@@ -155,7 +156,7 @@ class vehiculos extends Conn {
                     <div class="col-12 col-md-6 offset-md-3 border border-success rounded bg-light">
                         <form method="POST" name="">
                             <div class="form-group mb-2">
-                                <h1 class="text-center">Formulario</h1>
+                                <h1 class="text-center">Modificar datos del vehiculo</h1>
                                 <label for="dni">DNI*</label>
                                 <input value="'.$row["dni_c"].'" type="text" class="form-control" name="dni_c" id="dni_c" title="e.g 11111111N" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" required>
                             </div>
@@ -215,7 +216,7 @@ class vehiculos extends Conn {
         if ($check->rowCount() > 0){
 
                 if($result->execute()){
-                    echo "<meta http-equiv='refresh' content='0'>";
+                    echo "El vehiculo se ha modificado correctamente";
                 }
 
                 return null;
@@ -226,6 +227,24 @@ class vehiculos extends Conn {
         
     }
 
+    public function findCliente() {
+                
+        $result = $this->connection->prepare('SELECT dni FROM clientes');   
+        
+        $result->execute();
+
+          echo '<form method="post" >';
+          echo '<p class="p-3 mb-2 bg-light text-dark">Selecciona el DNI del vehiculo:</p>';
+          echo '<select name="dni_c" class="selectpicker" data-style="bg-dark text-light">';
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            echo '<p><option>'.$row["dni"].'</option></p>';
+            }
+          echo '</select>';
+          echo '<br><br>';
+          echo '<input type="submit" name="ver"  class="btn btn-light" value="Ver"><br><br>';
+          echo '</form>';
+            
+        }
 
 }
 
