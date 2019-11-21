@@ -11,6 +11,36 @@
     <link rel="stylesheet" href="vendor/fontawesome-5.11.2/css/all.min.css">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="">
+    <style> 
+  .carousel-inner img {
+      width: 100%;
+      height: 100%;
+  }
+
+#myCarousel .carousel-indicators {
+    position: static;
+    margin-top:20px;
+}
+
+#myCarousel .carousel-indicators > li {
+  width:100px;
+}
+
+ #myCarousel .carousel-indicators li img {
+    display: block;
+    opacity: 0.5;
+ }
+
+  #myCarousel .carousel-indicators li.active img {
+    opacity: 1;
+  }
+
+  #myCarousel .carousel-indicators li:hover img {
+    opacity: 0.75;
+  }
+      }
+      
+    </style>
     
     <title>Inicio | Taller</title>
   </head>
@@ -35,31 +65,7 @@
       </nav>
     </header>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div id="carouselExampleInterval" class="col-12 carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-interval="10000">
-              <img src="imgs/img1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item" data-interval="2000">
-              <img src="imgs/img2.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="imgs/img3.jpg" class="d-block w-100" alt="...">
-            </div>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
-    </div>
+    <p>CAROUSEL</p>
 
     <?php
       require_once 'footer.php';

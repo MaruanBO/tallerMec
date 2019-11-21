@@ -70,7 +70,7 @@
                       header("Location:admin.php");
                       break;
                     default:
-                      header("Location:index.php");
+                      header("Location:login.php");
                       break;
                   }
                 } else {
