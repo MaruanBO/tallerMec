@@ -16,8 +16,13 @@
   </head>
   <body>
     <?php
-      require 'menuCliente.php';
-      require_once 'conn.php';
+      session_start();
+      if (empty($_SESSION['cliente'])){
+      header("Location:../login.php");
+     }
+
+      require '../menuCliente.php';
+      require_once '../Conn.php';
 
       class GetFacturas extends Conn {
 

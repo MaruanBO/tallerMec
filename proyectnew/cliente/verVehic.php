@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -18,10 +17,14 @@
   <body>
     
     <?php
+    
     session_start();
+      if (empty($_SESSION['cliente'])){
+      header("Location:../login.php");
+     }
       
-      require 'menuCliente.php';
-      require_once 'conn.php';
+      require '../menuCliente.php';
+      require_once '../Conn.php';
 
 class vehiclesData extends Conn {
 
@@ -52,8 +55,16 @@ class vehiclesData extends Conn {
                     echo "<td>".$row["modelo"]."</td>";
                     echo "<td>".$row["tipo"]."</td>";
                     echo "<td>".$row["gama"]."</td>";
+                    echo 
+                        "<td><form method='post' class='mr-5' action='modVehic.php'>
+                            <button class='btn btn-primary w-50 pr-3' 
+                                type='submit' id='vmodificar' name='vmodificar'
+                                    value='".$row["matricula"]."'>
+                                    Modificar
+                        </button>";
 
                 }
+
         echo '</tr>';
         echo '</table>';                
     }

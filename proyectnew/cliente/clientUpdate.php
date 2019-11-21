@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <!-- Required meta tags -->
@@ -17,9 +17,14 @@
   <body>
     
     <?php
-    session_start();
-      require 'menuCliente.php';
-      require_once 'conn.php';
+        // Usar fran EN TODOS LOS PHP
+        session_start();
+        if (empty($_SESSION['cliente'])){
+            header("Location:../login.php");
+        }
+
+      require '../menuCliente.php';
+      require_once '../Conn.php';
 
         class updateClient extends Conn {
 

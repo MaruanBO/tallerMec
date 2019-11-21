@@ -17,14 +17,13 @@
   <body>
     
     <?php
-      session_start();
-<<<<<<< HEAD:proyectnew/cliente/tableClient.php
+        session_start();
+        if (empty($_SESSION['cliente'])){
+            header("Location:../login.php");
+        }
       
-=======
-      require '../header.php';
->>>>>>> 46bca7e0f5f507e70f67f5d764a310478b55bd2f:proyect/cliente/tableClient.php
-      require 'menuCliente.php';
-      require_once 'conn.php';
+      require '../menuCliente.php';
+      require_once '../Conn.php';
 
         class clientesData extends Conn {
 
