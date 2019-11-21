@@ -35,6 +35,7 @@
 
       $user = new vehiculos();
       $do = false;
+      $cliente = null;
 
       if (isset($_SESSION['admin']) || isset($_SESSION['emp'])) {
 
@@ -42,6 +43,7 @@
         if (isset($_POST['ver'])) {
           $dni = $_POST['dni_c'];        
           $do = true;
+          $cliente = false;
         } 
 
 
@@ -49,9 +51,10 @@
 
         $dni = $_SESSION['cliente'];
         $do = true;
+        $cliente = true;
 
       } else {
-          //LLEVAR A PAGINA DE LOGIN O INDEX////////////////////////
+          header("Location:../index.php")
       }
 
       if ($do == true) {
@@ -100,7 +103,7 @@
 
 
 
-      $user->load($dni);
+      $user->load($dni, $cliente);
     }
 
 
