@@ -25,112 +25,41 @@
     <title>Vehiculo | Mostrar datos</title>
   </head>
   <body>
-
     <?php
-      session_start();
       //require '../header.php';
-      //require 'menuVehiculo.php';
+      //require 'menuCliente.php';
       require_once 'conn.php';
-      require_once 'vehiculos.php';  
-      $_SESSION['emp'] = true;
 
-      $user = new vehiculos();
-      $do = false;
+        class vehiculosShow extends Conn {
 
-      if (isset($_SESSION['admin']) || isset($_SESSION['emp'])) {
+            protected $connection = null;
 
-        $user->findCliente();
-        if (isset($_POST['ver'])) {
-          $dni = $_POST['dni_c'];        
-          $do = true;
-        } 
+            public function __construct() {
+                parent::__construct();
+            }
 
+            public function load() {
+                
+            $result = $this->connection->prepare('SELECT * FROM vehiculos');   
+            
+            $result->execute();
 
-      } elseif (isset($_SESSION['cliente'])){
+              echo '<form method="post" action="datosClient.php">';
+              echo '<p class="p-3 mb-2 bg-light text-dark">Selecciona la matricula del vehiculo:</p>';
+              echo '<select name="cliente" class="selectpicker" data-style="bg-dark text-light">';
+                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                echo '<p><option>'.$row["matricula"].'</option></p>';
+                }
+              echo '</select>';
+              echo '<br><br>';
+              echo '<input type="submit" name="submit"  class="btn btn-light" value="Buscar"><br><br>';
+              echo '</form>';
+                
+            }
+        }
 
-        $dni = $_SESSION['cliente'];
-        $do = true;
-
-      } else {
-          //LLEVAR A PAGINA DE LOGIN O INDEX////////////////////////
-      }
-
-      if ($do == true) {
-      echo '
-        <div class="container border border-info mt-2 mb-2 bg-white">
-            <div class="row pb-3">
-                <div class="col-12"></div>
-            </div>
-            <div class="container row border-bottom border-info pb-3 pt-3">
-                <div class="col-12 col-md-6 offset-md-3 border border-success rounded bg-light">
-                    <form method="POST">
-                        <div class="form-group mb-2">
-                            <h2 class="text-center">Añadir vehiculo</h2>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="nombre">Matricula*</label> 
-                            <input type="text" name="matricula" id="matricula" class="form-control" title="e.g 000FPZ" pattern="[0-9]{4}[A-Z]{3,4}" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="nombre">Marca*</label> 
-                            <input type="text" name="marca" id="marca" class="form-control" title="e.g Pepe Gonzales Morales" pattern="[A-Za-z]{1,10}" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="nombre">Modelo*</label> 
-                            <input type="text" name="modelo" id="modelo" class="form-control" title="e.g Pepe Gonzales Morales" pattern="[A-Za-z]{1,10}" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="nombre">Tipo*</label> 
-                            <input type="text" name="tipo" id="tipo" class="form-control" title="e.g Pepe Gonzales Morales" pattern="[A-Za-z]{1,10}" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="nombre">Gama*</label> 
-                            <select name="gama" id="gama" class="form-control" required>
-                                <option>Baja</option>
-                                <option selected>Media</option>
-                                <option>Alta</option>
-                            </select>
-                        </div>
-                        <p> <input type="submit" class="btn btn-primary w-100" name="registrar" value="Registrar"></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-      ';
-
-
-
-
-      $user->load($dni);
-    }
-
-
-
-      if (isset($_POST['registrar'])) {
-        echo "ver";
-        echo $dni;
-        $dni_c = $dni;
-        echo $dni_c;
-        $matricula = $_POST['matricula'];
-        $marca = $_POST['marca'];
-        $modelo = $_POST['modelo'];
-        $tipo = $_POST['tipo'];
-        $gama = $_POST['gama'];
-        $user->registrar($dni_c,$matricula,$marca,$modelo,$tipo,$gama);
-      } 
-
-      if (isset($_POST['borrador'])) {
-        $user->borrar($_POST['borrador']);
-      }
-
-      if (isset($_POST['vmodificar'])){
-        $user->verModificar($_POST['vmodificar']);
-      }
-
-      if (isset($_POST['modificar'])){
-        $user->modificar($_POST['modificar']);
-      }
-      
+        $user = new clientesShow();
+        $user->load();
 
     ?>
     
