@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -17,14 +20,15 @@
   <body>
     
     <?php
-      session_start();
-<<<<<<< HEAD:proyectnew/cliente/tableClient.php
-      
-=======
-      require '../header.php';
->>>>>>> 46bca7e0f5f507e70f67f5d764a310478b55bd2f:proyect/cliente/tableClient.php
-      require 'menuCliente.php';
-      require_once 'conn.php';
+        if (empty($_SESSION['cliente'])){
+          header("Location:../login.php");
+        } 
+        
+        require_once '../Conn.php';
+        require_once '../clases/Login.php';
+        $cliente = new Login();
+        $cliente->cliente($_SESSION['cliente']);
+        require_once 'menuCliente.php';
 
         class clientesData extends Conn {
 
@@ -35,11 +39,10 @@
             }
 
            public function showClient() {
-                
-                $result = $this->connection->prepare('SELECT * FROM clientes where dni=?');  
-                $result->bindParam('1',$_SESSION['cliente']); 
+                $result = $this->connection->prepare('SELECT * FROM clientes WHERE dni = ?');   
+                $result->bindParam('1',$_SESSION['cliente']);   
                 $result->execute();
-                
+
                echo '<table class="table table-hover">
                <tr>
                 <th>Nombre</th>
@@ -47,25 +50,23 @@
                 <th>Teléfono</th>
                 <th>Acciones</th>
                </tr>';
-                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $row = $result->fetch(PDO::FETCH_ASSOC);
                     echo "<tr>";
                     echo "<td>".$row["nombre"]."</td>";
                     echo "<td>".$row["dni"]."</td>";
                     echo "<td>".$row["telefono"]."</td>";
-                    echo "<td><form method='post' class='mr-5' action='verRepar.php'><button type='submit' class='btn btn-primary w-50 pr-3' name='verFactura' value='".$row["dni"]."'>Facturas</button></form></td>";
-                }
+                    echo "<td><form method='post' class='mr-5' action='../cliente/verRepar.php'><button type='submit' class='btn btn-primary w-100 w-md-50 pr-3' name='verFactura' value='".$row["dni"]."'>Facturas</button></form></td>";
                 echo '</tr>';
-                echo '</table>';            
+                echo '</table>';                
             }
         }
+
         $user = new clientesData();
         $user->showClient();
-
     ?>
-    
 
     <?php
-      require '../footer.php';
+        require '../footer.php';
     ?>
 
     <!-- Optional JavaScript -->

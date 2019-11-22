@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -16,10 +19,19 @@
   </head>
   <body>
     <?php
-      require 'menuCliente.php';
-      require_once 'conn.php';
+      if (empty($_SESSION['cliente'])){
+        header("Location:../login.php");
+      } 
+      
+      require_once '../Conn.php';
+      require_once '../clases/Login.php';
+      $cliente = new Login();
+      $cliente->cliente($_SESSION['cliente']);
+      require_once 'menuCliente.php';
 
       class GetFacturas extends Conn {
+        
+        protected $connection = null;
 
         public function __construct() {
             parent::__construct();

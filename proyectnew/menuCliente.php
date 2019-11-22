@@ -15,11 +15,10 @@
                 <a class="dropdown-item" href="http://localhost/ejer/objet/poo/proyectnew/cliente/verVehic.php">Mi coche</a>
                 <a class="dropdown-item" href="http://localhost/ejer/objet/poo/proyectnew/cliente/tableClient.php">Mis datos</a>
                 <a class="dropdown-item" href="http://localhost/ejer/objet/poo/proyectnew/cliente/FormClientUp.php">Actualizar Perfil</a>
-                <a class="dropdown-item" href="http://localhost/ejer/objet/poo/proyectnew/cliente/FormVehicUp.php">Actualizar Coche</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost/web1/logout.php">Cerrar Sesión</a>
+              <a class="nav-link" href="http://localhost/ejer/objet/poo/proyectnew/logout.php">Cerrar Sesión</a>
             </li>
           </ul>
         </div>

@@ -1,6 +1,3 @@
-<?php 
-  session_start(); 
-?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -21,13 +18,33 @@
     <?php
       //session_start();
       require_once 'menuCliente.php';
+
     ?>
     <body>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="alert alert-primary m-2" role="alert">
-              Bienvenido, <?php echo $_SESSION['cliente'] ?>!
+            <?php 
+            // Usar fran EN TODOS LOS PHP
+            session_start();
+            if (isset($_SESSION['cliente'])){
+            echo ' <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="alert alert-primary m-2" role="alert">
+                        Bienvenido,'. $_SESSION["cliente"].' 
+                      </div>
+                    </div>
+                  </div>
+                </div>';  
+
+            }
+            else{
+              header("Location:index.php");
+            }
+
+            ?>
             </div>
           </div>
         </div>
