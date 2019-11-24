@@ -1,0 +1,39 @@
+Class ValidateLogin:
+	Es el que va a permitir validar login.php y también se va a encargar de asigner el nombre de session en todos los menús. Hay que llamar ese fichero si o si en todos.
+
+Class Factura: 
+	Es el encargado de mostrar la factura extendida. No sé exactemente si meterlo dentro de ClassReparar. 
+
+Class Reparar:
+	Se va a encargar de cargar las facturas de un usuario por dni, de todos los usuarios, mostrar la factura de un usuario por telefono, tambien a permitir mostrar una serie de checkbox llamando a la tabla catalogo. Y de actualizar el estado de un empleado cuando realice una reparacion. **Basicamente registrar una reparacion, cambiar estado al empleado y ver facturas mente tablas. 
+
+Class Cliente : 
+	- Registrar cliente,
+	- Mostrar clientes a borrar mediante un select
+	- Eliminar cliente.
+	- Mostrar cliente por DNI, Tel y Nombre y esto te lo lleva a una funcion que muestra una tabla con la informacion.
+	- Mostrar todos los clientes que hay registrados.
+	- Mostrar un formulario con los datos del cliente para modificar
+	- Modificar usuario cuando hayas rellenado el formulario anterior.
+	- Mostrar cliente en una tabla.
+
+Class Vehiculo:
+	- Carga todos los vehiculos existentes
+	- Carga vehiculo de un usuario atraves del dni
+	- Registrar un vehiculo.
+	- Borrar un vehiculo por matricula.
+	- Mostrar formulario con los datos del vehiculo a modificar.
+	- Modificar vehiculo.
+	- Buscar cliente que exista en usuarios y tenga coche.
+
+Class Empleado:
+	- Mostrar empleado por dni.
+	- Mostrar estado del empleado por dni en una tabla.
+	- Mostrar formulario con los datos del empleado a modificar.
+	- Modificar empleado.
+	- Mostrar empleados libres mediante un select.
+	- Mostrar estado de empleado con una linea simple //Se usa en el menu de empleado. Hay que llamarlo en todos los ficheros que pertenezcan a la carpeta empleado.
+
+	- Me ha faltado Borrar empleado, insertar empleado.
+	
+	
