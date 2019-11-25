@@ -52,7 +52,7 @@
             if(isset($_POST["cmodificar"])) {
                 $cliente->verModificarCliente();
             }
-            
+
             if(isset($_POST["modificarCliente"])) {
             $cliente->modificarCliente($_POST['nombre'],$_POST['telefono'],$_SESSION["cliente"]);
             }
@@ -75,9 +75,6 @@
             }
 
             ?>
-
-
-
           </div>
         </div>
       </div>

@@ -152,14 +152,7 @@
                     </td>
                 </tr>
             </table>
-        </div>
-        
-        <div class="justify-content-center text-center bg-light">
-            <form action="cliente.php">
-                <input type="submit" class="btn btn-white border border-danger" value="Volver atras" />
-            </form>
-        </div>
-        
+        </div>        
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="../vendor/jquery-3.3.1.slim.min.js"></script>
