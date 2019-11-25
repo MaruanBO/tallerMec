@@ -13,6 +13,19 @@
     <link rel="stylesheet" type="text/css" href="">
     
     <title>Inicio | Taller</title>
+    <style>
+      
+.carousel-item {
+  height: 65vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+    </style>
   </head>
   <body>
     <header>
@@ -35,31 +48,44 @@
       </nav>
     </header>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div id="carouselExampleInterval" class="col-12 carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-interval="10000">
-              <img src="imgs/img1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item" data-interval="2000">
-              <img src="imgs/img2.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="imgs/img3.jpg" class="d-block w-100" alt="...">
-            </div>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
+     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <!-- Slide One - Set the background image for this slide in the line below -->
+      <div class="carousel-item active" style="background-image: url('imgs/repar.jpg')">
+        <div class="carousel-caption d-none d-md-block">
+          <h3 class="display-4">Calidad</h3>
+          <p class="lead">Contamos con los mejores profesionales del sector</p>
+        </div>
+      </div>
+      <!-- Slide Two - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('imgs/efect.jpg')">
+        <div class="carousel-caption d-none d-md-block">
+          <h3 class="display-4">Efectividad</h3>
+          <p class="lead">En tiempo record dispondrá de su coche reparado</p>
+        </div>
+      </div>
+      <!-- Slide Three - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('imgs/lealtad.jpg')">
+        <div class="carousel-caption d-none d-md-block">
+          <h3 class="display-4">Lealtad</h3>
+          <p class="lead">Siempre buscamos la mejor solución para usted</p>
         </div>
       </div>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+  </div>
 
     <?php
       require_once 'footer.php';
