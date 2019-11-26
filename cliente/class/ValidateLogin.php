@@ -1,15 +1,22 @@
 <?php
-	class ValidateLogin extends Conn {
+
+include_once 'Conn.php';
+
+class ValidateLogin {
+
 		private $_nombre;
 		private $_telefono;
 		private $_dni;
+ 		private $db;
+
+     public function __construct(){
+          //Obtenemos la instancia de la BD
+     	$this->db = Database::getInstance();
+     }
 	  
-	  	public function __construct() {
-	    	parent::__construct();
-	  	}
 
 	  	public function load($user,$password) {
-	    	$login = $this->connection->prepare('SELECT * FROM usuarios WHERE dni = ?');
+	    	$login = $this->db->getQuery('SELECT * FROM usuarios WHERE dni = ?');
 	    	$login->bindParam('1',$user);
 	    	$login->execute();
 	    	$check_pass = $login->fetch();
@@ -33,14 +40,14 @@
 	          		break;
 	      		}
 	    	} else {
-	      		return '<div class="alert alert-danger mt-2" role="alert">
+	      		echo '<div class="alert alert-danger mt-2" role="alert">
 	            	¡Datos incorrectos!
 	        	</div>';
 	    	}
 	  	}
 
 	  	public function cliente($session) {
-	  		$result = $this->connection->prepare('SELECT * FROM usuarios WHERE dni = ?');
+	  		$result = $this->db->getQuery('SELECT * FROM usuarios WHERE dni = ?');
 	  		$result->bindParam('1', $session);
 	  		$result->execute();
 	  		$row = $result->fetch(PDO::FETCH_ASSOC);
@@ -50,7 +57,7 @@
 	  	}
 
 	  	public function empleado($session) {
-	  		$result = $this->connection->prepare('SELECT * FROM usuarios WHERE dni = ?');
+	  		$result = $this->db->getQuery('SELECT * FROM usuarios WHERE dni = ?');
 	  		$result->bindParam('1', $session);
 	  		$result->execute();
 	  		$row = $result->fetch(PDO::FETCH_ASSOC);
@@ -60,7 +67,7 @@
 	  	}
 
 	  	public function admin($session) {
-	  		$result = $this->connection->prepare('SELECT * FROM usuarios WHERE dni = ?');
+	  		$result = $this->db->getQuery('SELECT * FROM usuarios WHERE dni = ?');
 	  		$result->bindParam('1', $_SESSION['admin']);
 	  		$result->execute();
 	  		$row = $result->fetch(PDO::FETCH_ASSOC);
